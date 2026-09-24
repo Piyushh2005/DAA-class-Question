@@ -1,0 +1,110 @@
+import matplotlib.pyplot as plt
+
+
+# -------------------------------
+# Linear Search
+# -------------------------------
+def linear_search(arr, key):
+    comparisons = 0
+
+    for i in range(len(arr)):
+        comparisons += 1
+
+        if arr[i] == key:
+            break
+
+    return comparisons
+
+
+# -------------------------------
+# Binary Search
+# -------------------------------
+def binary_search(arr, key):
+    low = 0
+    high = len(arr) - 1
+    comparisons = 0
+
+    while low <= high:
+        mid = (low + high) // 2
+        comparisons += 1
+
+        if arr[mid] == key:
+            break
+
+        elif arr[mid] < key:
+            low = mid + 1
+
+        else:
+            high = mid - 1
+
+    return comparisons
+
+
+# -------------------------------
+# Main Program
+# -------------------------------
+
+# Sorted array
+arr = list(range(1, 1001))
+
+# Search for last element (worst case)
+key = 1000
+
+# Different input sizes
+sizes = [10, 50, 100, 200, 500, 1000]
+
+linear_results = []
+binary_results = []
+
+for n in sizes:
+
+    current_array = arr[:n]
+
+    linear = linear_search(current_array, key)
+    binary = binary_search(current_array, key)
+
+    linear_results.append(linear)
+    binary_results.append(binary)
+
+
+# -------------------------------
+# Display Results
+# -------------------------------
+
+print("Input Size\tLinear Search\tBinary Search")
+print("---------------------------------------------")
+
+for i in range(len(sizes)):
+    print(f"{sizes[i]}\t\t{linear_results[i]}\t\t{binary_results[i]}")
+
+
+# -------------------------------
+# Create Graph
+# -------------------------------
+
+plt.plot(
+    sizes,
+    linear_results,
+    marker='o',
+    label='Linear Search'
+)
+
+plt.plot(
+    sizes,
+    binary_results,
+    marker='o',
+    label='Binary Search'
+)
+
+plt.xlabel("Input Size (n)")
+plt.ylabel("Number of Comparisons")
+
+plt.title("Linear Search vs Binary Search")
+
+plt.legend()
+plt.grid(True)
+
+plt.show()
+
+
+
